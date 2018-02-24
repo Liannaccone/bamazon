@@ -122,7 +122,7 @@ function continueShopping() {
 				return purchaseProduct();
 			}
 			else{
-				console.log("\n\nCome back s")
+				console.log("\n\nCome back soon!")
 				process.exit();
 			}
 		})
