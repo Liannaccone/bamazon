@@ -189,12 +189,32 @@ function addProduct(){
 			{
 				name: "productPrice",
 				type: "input",
-				message: "How much does it cost?"
+				message: "How much does it cost?",
+				validate: function(value) {
+					if(value < 1) {
+						console.log("\n\n * * * We don't give things out for free here... (enter a positive number) * * *\n\n");
+						return false;
+					}
+					if(isNaN(value) === false) {
+						return true;
+					}
+					return false;
+				}
 			},
 			{
 				name: "productStockQuantity",
 				type: "input",
-				message: "How many do we have?"
+				message: "How many do we have?",
+				validate: function(value) {
+					if(value < 0) {
+						console.log("\n\n * * * Enter a positive number * * *\n\n");
+						return false;
+					}
+					if(isNaN(value) === false) {
+						return true;
+					}
+					return false;
+				}
 			}
 			]).then(function(ans){
 				connection.query("INSERT INTO products SET ?",
