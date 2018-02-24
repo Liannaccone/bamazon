@@ -40,6 +40,10 @@ function purchaseProduct(){
 				type: "input",
 				message:"What is the ID of the item you would like to purchase? [Quit with Q]",
 				validate: function(value) {
+					if (value > results.length || value < 1){
+						console.log("\n\n * * * Invalid item ID * * *\n\n")
+						return false;
+					}
 					if (isNaN(value) === false) {
 						return true;
 					}
@@ -55,6 +59,10 @@ function purchaseProduct(){
 				type: "input",
 				message: "How many would you like? [Quit with Q]",
 				validate: function(value) {
+					if (value < 0){
+						console.log("\n\n* * * We don't want your handouts (enter a positive number) * * *\n\n")
+						return false;
+					}
 					if(isNaN(value) === false) {
 						return true;
 					}
