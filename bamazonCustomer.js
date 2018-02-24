@@ -17,7 +17,7 @@ connection.connect(function(err){
 
 purchaseProduct();
 
-// prints table representing the bamazon.products table
+// prints table representing the bamazon.products table and prompt user for item purchase
 function purchaseProduct(){
 	connection.query("SELECT * FROM products", function(err, results) {
     	if (err) throw err;
@@ -100,7 +100,7 @@ function purchaseProduct(){
 
 };
 
-
+// prompts user to select whether they would like to exit app or continue shopping
 function continueShopping() {
 	inquirer.prompt([
 		{
@@ -122,27 +122,3 @@ function continueShopping() {
 
 
 
-// function purchaseItem() {
-// 	inquirer
-// 		.prompt([
-// 			{
-// 				name: "userItem",
-// 				type: "input",
-// 				message:"What is the ID of the item you would like to purchase? [Quit with Q]"
-// 				// validate: function(value) {
-// 				// 	if (isNaN(value) ===false || "Q") {
-// 				// 		return true;
-// 				// 	}
-// 				// 	return false;
-// 				// }
-// 			},
-// 			{
-// 				name: "userQuantity",
-// 				type: "input",
-// 				message: "How many would you like? [Quit with Q]"
-// 			}
-// 		]).then(function(answer){
-// 			console.log("You have purchased "+ answer.userQuantity + " of item " + userItem)
-// 		})
-// }
- 
