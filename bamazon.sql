@@ -11,5 +11,6 @@ CREATE TABLE products (
 	PRIMARY KEY (item_id)
 );
 
-INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ();
+
+
+
