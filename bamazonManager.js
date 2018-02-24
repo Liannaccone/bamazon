@@ -124,7 +124,7 @@ function addInventory(){
 			{
 				name: "userQuantity",
 				type: "input",
-				message: "How many would you like to add? [Quit with Q]",
+				message: "How many would you like to add? [Enter R to return to menu]",
 				validate: function(value) {
 					if (value < 0){
 						console.log("\n\n* * * Are you trying to steal from Bamazon? (enter a positive number) * * *\n\n")
@@ -133,7 +133,7 @@ function addInventory(){
 					if(isNaN(value) === false) {
 						return true;
 					}
-					if(value === "Q" || value === "q") {
+					if(value === "R" || value === "R") {
 						console.log("\n\nCome back soon!");
 						process.exit();
 					}
@@ -156,7 +156,7 @@ function addInventory(){
 					function(error){
 						if (error) throw err;
 						console.log("\n\n* * * INVENTORY ADDED * * *"+
-									"\nYou have successfully added "+ answer.userQuantity + " unit(s)of "+ res[0].product_name +"\n\n");
+									"\nYou have successfully added "+ answer.userQuantity + " unit(s) of "+ res[0].product_name +"\n\n");
 						startMenu();
 					})
 				}
@@ -166,7 +166,51 @@ function addInventory(){
 };
 
 function addProduct(){
-
+	connection.query("SELECT department_name FROM products GROUP BY department_name", function(err, results) {
+		inquirer
+			.prompt([
+			{
+				name: "productName",
+				type: "input",
+				message: "What is the name of the product you would like to add?"
+			},
+			{
+				name: "productDepartment",
+				type: "list",
+				message: "Which department does this product fall into?",
+				choices: function() {
+					var choiceArr = [];
+					for(i = 0; i < results.length; i++) {
+						choiceArr.push(results[i].department_name);
+					}
+					return choiceArr;
+				}
+			},
+			{
+				name: "productPrice",
+				type: "input",
+				message: "How much does it cost?"
+			},
+			{
+				name: "productStockQuantity",
+				type: "input",
+				message: "How many do we have?"
+			}
+			]).then(function(ans){
+				connection.query("INSERT INTO products SET ?",
+				{
+					product_name: ans.productName,
+					department_name: ans.productDepartment,
+					price: ans.productPrice,
+					stock_quantity: ans.productStockQuantity
+				},
+				function(err) {
+					if (err) throw err;
+					console.log("\n"+ ans.productName+ " added to Bamazon.\n")
+					startMenu();
+				})
+			})
+	});
 };
 
 // 
