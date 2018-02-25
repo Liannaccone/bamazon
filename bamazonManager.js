@@ -171,7 +171,7 @@ function addInventory(){
 };
 
 function addProduct(){
-	connection.query("SELECT department_name FROM products GROUP BY department_name", function(err, results) {
+	connection.query("SELECT department_name FROM departments", function(err, results) {
 		inquirer
 			.prompt([
 			{
