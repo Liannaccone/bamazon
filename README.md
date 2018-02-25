@@ -3,12 +3,12 @@
 An Amazon-like storefront node application that utilizes MySQL to store data. 
 
 The application has three interfaces:
-	* Customer View
-		** Users can submit orders which deplete stock from the store's inventory.
-	* Manager View
-		** Users can track product sales across Bamazon's departments, view items with a low inventory, add quantities to selected inventories, and add new products to the database within department parameters created within the Supervisor View.
-	* Supervisor View
-		** Users can view the highest-grossing departments in the store (total sales and profits by item department) and create departments within Bamazon.
+ * Customer View
+	* Users can submit orders which deplete stock from the store's inventory.
+ * Manager View
+	* Users can track product sales across Bamazon's departments, view items with a low inventory, add quantities to selected inventories, and add new products to the database within department parameters created within the Supervisor View.
+ * Supervisor View
+	* Users can view the highest-grossing departments in the store (total sales and profits by item department) and create departments within Bamazon.
 
 ## Setup and Usage
 * Clone the repository.
