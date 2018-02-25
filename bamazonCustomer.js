@@ -1,6 +1,7 @@
 var Table= require("cli-table");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var chalk = require("chalk");
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -24,7 +25,7 @@ function purchaseProduct(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
+    		head: [chalk.bold.black('item_id'), chalk.bold.black('product_name'),chalk.bold.black('department_name'), chalk.bold.black('price'),chalk.bold.black('stock_quantity')]
   			, colWidths: [20, 20, 20, 20, 20]
 			});
 
