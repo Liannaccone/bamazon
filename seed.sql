@@ -18,3 +18,8 @@ INSERT INTO departments (department_name)
 SELECT DISTINCT department_name 
 FROM products
 ORDER BY department_name ASC;
+
+
+UPDATE departments
+SET over_head_costs = (SELECT FLOOR(RAND()*(50-10)+10))
+

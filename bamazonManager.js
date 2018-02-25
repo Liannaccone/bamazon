@@ -53,13 +53,13 @@ function viewProducts(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
-  			, colWidths: [20, 20, 20, 20, 20]
+    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity', 'product_sales']
+  			, colWidths: [20, 20, 20, 20, 20,20]
 			});
 
     	for( i = 0; i < results.length; i++){
 			table.push(
-			    [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+			    [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity, results[i].product_sales]
 			 );
 		}
 		console.log(table.toString());
