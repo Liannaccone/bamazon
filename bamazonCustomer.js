@@ -74,7 +74,7 @@ function purchaseProduct(){
 				}
 			}
 		]).then(function(answer){
-			connection.query("SELECT product_name, price, stock_quantity FROM products WHERE ?", [{item_id: answer.userItem}], function(err, res) {
+			connection.query("SELECT product_name, price, stock_quantity, product_sales FROM products WHERE ?", [{item_id: answer.userItem}], function(err, res) {
 				if (err) throw err;
 				if(res[0].stock_quantity < answer.userQuantity) {
 					console.log("\n\n* * * INSUFFICIENT QUANTITY * * *",
@@ -83,12 +83,14 @@ function purchaseProduct(){
 				}
 
 				else{
-					var newStockQuantity = res[0].stock_quantity - answer.userQuantity
-					var userCost = res[0].price * answer.userQuantity
+					var newStockQuantity = res[0].stock_quantity - answer.userQuantity;
+					var productCost = res[0].price * answer.userQuantity;
+					var newProductSales = res[0].product_sales + productCost;
 					connection.query("UPDATE products SET ? WHERE ?",
 						[
 							{
-								stock_quantity: newStockQuantity
+								stock_quantity: newStockQuantity,
+								product_sales: newProductSales
 							},
 							{
 								item_id: answer.userItem
@@ -97,7 +99,7 @@ function purchaseProduct(){
 						function(error){
 							if (error) throw err;
 							console.log("\n\n* * * THANK YOU * * *"+
-										"\nYour total cost is $" + userCost +
+										"\nYour total cost is $" + productCost +
 										"\nYou have successfully purchased "+ answer.userQuantity + " unit(s) of "+ res[0].product_name+"\n\n");
 							continueShopping();
 						});
