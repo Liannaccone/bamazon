@@ -140,8 +140,7 @@ function addInventory(){
 						return true;
 					}
 					if(value === "R" || value === "R") {
-						console.log("\n\nCome back soon!");
-						process.exit();
+						startMenu();
 					}
 					return false;
 				}
@@ -239,7 +238,7 @@ function addProduct(){
 	});
 };
 
-// 
+
 function runQuit(){
 	console.log("\n* * * EXITING MANAGER VIEW * * *\n")
 	process.exit();

@@ -13,9 +13,10 @@ var connection = mysql.createConnection({
 connection.connect(function(err){
 	if (err) throw err;
 	console.log("connected as id " + connection.threadId);
+	console.log("\n\n* * * ENTERING SUPERVISOR VIEW * * *\n\n")	
+	purchaseProduct();
 });
 
-purchaseProduct();
 
 // prints table representing the bamazon.products table and prompt user for item purchase
 function purchaseProduct(){
@@ -48,8 +49,7 @@ function purchaseProduct(){
 						return true;
 					}
 					if(value === "Q" || value ==="q"){
-						console.log("\n\nCome back soon!");
-						process.exit();
+						runQuit();
 					}
 					return false;
 				}
@@ -67,8 +67,7 @@ function purchaseProduct(){
 						return true;
 					}
 					if(value === "Q" || value === "q") {
-						console.log("\n\nCome back soon!");
-						process.exit();
+						runQuit();
 					}
 					return false;
 				}
@@ -124,11 +123,12 @@ function continueShopping() {
 				return purchaseProduct();
 			}
 			else{
-				console.log("\n\nCome back soon!\n\n")
-				process.exit();
+				runQuit();
 			}
 		})
 }
 
-
-
+function runQuit(){
+	console.log("\n* * * EXITING CUSTOMER VIEW * * *\n")
+	process.exit();
+};
