@@ -49,7 +49,7 @@ function startMenu() {
 
 
 function viewProducts(){
-	connection.query("SELECT * FROM products", function(err, results) {
+	connection.query("SELECT * FROM products ORDER BY department_name ASC, product_name ASC", function(err, results) {
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
@@ -68,26 +68,32 @@ function viewProducts(){
 };
 
 function viewLowInventory(){
-	connection.query("SELECT * FROM products WHERE stock_quantity < 5", function(err, results) {
+	connection.query("SELECT * FROM products WHERE stock_quantity < 5 ORDER BY department_name ASC, product_name ASC", function(err, results) {
     	if (err) throw err;
-    	// instantiate
-    	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
-  			, colWidths: [20, 20, 20, 20, 20]
-			});
+    	if (results.length < 1){
+    		console.log("\nThere are no items with an inventory count less than 5.\n")
+    		startMenu();
+    	}
+    	else{
+	    	// instantiate
+	    	var table = new Table({
+	    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
+	  			, colWidths: [20, 20, 20, 20, 20]
+				});
 
-    	for( i = 0; i < results.length; i++){
-			table.push(
-			    [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
-			 );
+	    	for( i = 0; i < results.length; i++){
+				table.push(
+				    [results[i].item_id, results[i].product_name, results[i].department_name, results[i].price, results[i].stock_quantity]
+				 );
+			}
+			console.log(table.toString());
+			startMenu();
 		}
-		console.log(table.toString());
-		startMenu();
 	});
 };
 
 function addInventory(){
-	connection.query("SELECT * FROM products", function(err, results) {
+	connection.query("SELECT * FROM products ORDER BY department_name ASC, product_name ASC", function(err, results) {
     	if (err) throw err;
     	// instantiate
     	var table = new Table({

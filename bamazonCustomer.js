@@ -19,7 +19,7 @@ purchaseProduct();
 
 // prints table representing the bamazon.products table and prompt user for item purchase
 function purchaseProduct(){
-	connection.query("SELECT * FROM products", function(err, results) {
+	connection.query("SELECT * FROM products ORDER BY department_name ASC, product_name ASC", function(err, results) {
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
@@ -122,7 +122,7 @@ function continueShopping() {
 				return purchaseProduct();
 			}
 			else{
-				console.log("\n\nCome back soon!")
+				console.log("\n\nCome back soon!\n\n")
 				process.exit();
 			}
 		})
