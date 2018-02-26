@@ -10,7 +10,7 @@ The application has three interfaces:
  * Supervisor View
 	* Users can view the highest-grossing departments in the store (total sales and profits by item department) and create departments within Bamazon.
 
-## Setup and Usage
+## Setup
 * Clone the repository.
 * Install Javascript packages: 
 
@@ -39,6 +39,16 @@ The application has three interfaces:
   ```
   node bamazonSupervisor.js
   ```
+
+## Usage
+
+### Bamazon Customer
+
+![alt text](./assets/images/bamazonCustomer.gif "Bamazon Customer Demo")
+
+### Bamazon Manager
+
+![alt text](./assets/images/bamazonManager.gif "Bamazon Manager Demo")
 
 ## Technology Used
 - Javascript

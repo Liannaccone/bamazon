@@ -26,7 +26,7 @@ function purchaseProduct(){
     	// instantiate
     	var table = new Table({
     		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'),chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity')]
-  			, colWidths: [20, 20, 20, 20, 20]
+  			, colWidths: [10, 20, 20, 10, 20]
 			});
 
     	for( i = 0; i < results.length; i++){
