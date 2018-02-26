@@ -44,11 +44,11 @@ The application has three interfaces:
 
 ### Bamazon Customer
 
-![alt text](./assets/images/bamazonCustomer.gif "Bamazon Customer Demo")
+![alt text](/assets/images/bamazonCustomer.gif "Bamazon Customer Demo")
 
 ### Bamazon Manager
 
-![alt text](./assets/images/bamazonManager.gif "Bamazon Manager Demo")
+![alt text](/assets/images/bamazonManager.gif "Bamazon Manager Demo")
 
 ## Technology Used
 - Javascript
