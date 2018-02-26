@@ -1,6 +1,7 @@
 var Table= require("cli-table");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var chalk = require("chalk");
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -13,7 +14,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err){
 	if (err) throw err;
 	console.log("connected as id " + connection.threadId);
-	console.log("\n\n* * * ENTERING MANAGER VIEW * * *\n\n")	
+	console.log("\n\n"+ chalk.bold("* * * ENTERING MANAGER VIEW * * *") + "\n\n")	
 	startMenu();
 });
 
@@ -53,7 +54,7 @@ function viewProducts(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity', 'product_sales']
+    		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'), chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity'), chalk.bold.redBright('product_sales')]
   			, colWidths: [20, 20, 20, 20, 20,20]
 			});
 
@@ -77,7 +78,7 @@ function viewLowInventory(){
     	else{
 	    	// instantiate
 	    	var table = new Table({
-	    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
+	    		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'),chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity')]
 	  			, colWidths: [20, 20, 20, 20, 20]
 				});
 
@@ -97,7 +98,7 @@ function addInventory(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity']
+    		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'),chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity')]
   			, colWidths: [20, 20, 20, 20, 20]
 			});
 
@@ -115,14 +116,14 @@ function addInventory(){
 				message:"What is the ID of the item you would like to add more inventory to? [Enter R to return to menu]",
 				validate: function(value) {
 					if (value > results.length || value < 1){
-						console.log("\n\n * * * Invalid item ID * * *\n\n")
+						console.log("\n\n" + chalk.bold.redBright("* * * Invalid item ID * * *")+"\n\n")
 						return false;
 					}
 					if (isNaN(value) === false) {
 						return true;
 					}
 					if(value === "R" || value ==="r"){
-						startMenu();
+						return startMenu();
 					}
 					return false;
 				}
@@ -133,14 +134,14 @@ function addInventory(){
 				message: "How many would you like to add? [Enter R to return to menu]",
 				validate: function(value) {
 					if (value < 0){
-						console.log("\n\n* * * Are you trying to steal from Bamazon? (enter a positive number) * * *\n\n")
+						console.log("\n\n* * * Are you trying to steal from Bamazon? ("+chalk.bold("enter a positive number")+") * * *\n\n")
 						return false;
 					}
 					if(isNaN(value) === false) {
 						return true;
 					}
 					if(value === "R" || value === "R") {
-						startMenu();
+						return startMenu();
 					}
 					return false;
 				}
@@ -160,8 +161,8 @@ function addInventory(){
 					],
 					function(error){
 						if (error) throw err;
-						console.log("\n\n* * * INVENTORY ADDED * * *"+
-									"\nYou have successfully added "+ answer.userQuantity + " unit(s) of "+ res[0].product_name +"\n\n");
+						console.log("\n\n" + chalk.bold("* * * INVENTORY ADDED * * *")+
+									"\nYou have successfully "+chalk.bold("ADDED ") + answer.userQuantity + " unit(s) of "+ res[0].product_name +"\n\n");
 						startMenu();
 					})
 				}
@@ -171,7 +172,7 @@ function addInventory(){
 };
 
 function addProduct(){
-	connection.query("SELECT department_name FROM departments", function(err, results) {
+	connection.query("SELECT DISTINCT department_name FROM departments", function(err, results) {
 		inquirer
 			.prompt([
 			{
@@ -197,7 +198,7 @@ function addProduct(){
 				message: "How much does it cost?",
 				validate: function(value) {
 					if(value < 1) {
-						console.log("\n\n * * * We don't give things out for free here... (enter a positive number) * * *\n\n");
+						console.log("\n\n * * * We don't give things out for free here... ("+chalk.bold("enter a positive number")+") * * *\n\n");
 						return false;
 					}
 					if(isNaN(value) === false) {
@@ -231,7 +232,7 @@ function addProduct(){
 				},
 				function(err) {
 					if (err) throw err;
-					console.log("\n"+ ans.productName+ " added to Bamazon.\n")
+					console.log("\n"+ ans.productName + " "+ chalk.bold("ADDED") + " to Bamazon.\n")
 					startMenu();
 				})
 			})
@@ -240,7 +241,7 @@ function addProduct(){
 
 
 function runQuit(){
-	console.log("\n* * * EXITING MANAGER VIEW * * *\n")
+	console.log("\n\n"+chalk.bold("* * * EXITING MANAGER VIEW * * *")+"\n")
 	process.exit();
 };
 

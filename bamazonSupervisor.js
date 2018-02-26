@@ -1,6 +1,7 @@
 var Table= require("cli-table");
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var chalk = require("chalk");
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -13,7 +14,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err){
 	if (err) throw err;
 	console.log("connected as id " + connection.threadId);
-	console.log("\n\n* * * ENTERING SUPERVISOR VIEW * * *\n\n")	
+	console.log("\n\n"+ chalk.bold("* * * ENTERING SUPERVISOR VIEW * * *") + "\n\n")	
 	startMenuWithTable();
 });
 
@@ -22,7 +23,7 @@ function startMenuWithTable() {
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['item_id', 'product_name','department_name', 'price','stock_quantity', 'product_sales']
+    		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'),chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity'), chalk.bold.redBright('product_sales')]
   			, colWidths: [20, 20, 20, 20, 20,20]
 			});
 
@@ -32,30 +33,30 @@ function startMenuWithTable() {
 			 );
 		}
 		console.log(table.toString());
-	inquirer.
-		prompt([
-			{
-				name: "userInput",
-				type: "list",
-				choices: ["View Products for Sale","View Product Sales By Department", "Create New Department", "Quit"],
-				message: "What would you like to do?"
-			}
-			]).then(function(answer){
-				switch(answer.userInput) {
-
-					case "View Products for Sale":
-						return startMenuWithTable();
-
-					case "View Product Sales By Department":
-						return viewSalesByDept();
-
-					case "Create New Department":
-						return createDept();
-
-					case "Quit":
-						return runQuit();
+		inquirer.
+			prompt([
+				{
+					name: "userInput",
+					type: "list",
+					choices: ["View Products for Sale","View Product Sales By Department", "Create New Department", "Quit"],
+					message: "What would you like to do?"
 				}
-			})	
+				]).then(function(answer){
+					switch(answer.userInput) {
+
+						case "View Products for Sale":
+							return startMenuWithTable();
+
+						case "View Product Sales By Department":
+							return viewSalesByDept();
+
+						case "Create New Department":
+							return createDept();
+
+						case "Quit":
+							return runQuit();
+					}
+				})	
 	})	
 }
 
@@ -64,7 +65,7 @@ function viewSalesByDept(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: ['department_id', 'department_name','over_head_costs', 'product_sales', 'total_profit']
+    		head: [chalk.bold.redBright('department_id'), chalk.bold.redBright('department_name'),chalk.bold.redBright('over_head_costs'), chalk.bold.redBright('product_sales'), chalk.bold.redBright('total_profit')]
   			, colWidths: [20, 20, 20, 20, 20]
 			});
 
@@ -144,6 +145,6 @@ function showMenu() {
 }
 
 function runQuit(){
-	console.log("\n* * * EXITING SUPERVISOR VIEW * * *\n")
+	console.log("\n\n" + chalk.bold("* * * EXITING SUPERVISOR VIEW * * *") + "\n\n")
 	process.exit();
 };

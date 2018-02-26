@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
 connection.connect(function(err){
 	if (err) throw err;
 	console.log("connected as id " + connection.threadId);
-	console.log("\n\n* * * ENTERING SUPERVISOR VIEW * * *\n\n")	
+	console.log("\n\n" + chalk.bold("* * * ENTERING SUPERVISOR VIEW * * *")+"\n\n")	
 	purchaseProduct();
 });
 
@@ -25,7 +25,7 @@ function purchaseProduct(){
     	if (err) throw err;
     	// instantiate
     	var table = new Table({
-    		head: [chalk.bold.black('item_id'), chalk.bold.black('product_name'),chalk.bold.black('department_name'), chalk.bold.black('price'),chalk.bold.black('stock_quantity')]
+    		head: [chalk.bold.redBright('item_id'), chalk.bold.redBright('product_name'),chalk.bold.redBright('department_name'), chalk.bold.redBright('price'),chalk.bold.redBright('stock_quantity')]
   			, colWidths: [20, 20, 20, 20, 20]
 			});
 
@@ -61,7 +61,7 @@ function purchaseProduct(){
 				message: "How many would you like? [Quit with Q]",
 				validate: function(value) {
 					if (value < 0){
-						console.log("\n\n* * * We don't want your handouts (enter a positive number) * * *\n\n")
+						console.log("\n\n* * * We don't want your handouts ("+chalk.bold.black("enter a positive number")+") * * *\n\n")
 						return false;
 					}
 					if(isNaN(value) === false) {
@@ -77,7 +77,7 @@ function purchaseProduct(){
 			connection.query("SELECT product_name, price, stock_quantity, product_sales FROM products WHERE ?", [{item_id: answer.userItem}], function(err, res) {
 				if (err) throw err;
 				if(res[0].stock_quantity < answer.userQuantity) {
-					console.log("\n\n* * * INSUFFICIENT QUANTITY * * *",
+					console.log("\n\n"+chalk.bold.redBright("* * * INSUFFICIENT QUANTITY * * *"),
 								"\nUnfortunately, we only have", res[0].stock_quantity,"units of that item available.\n\n")
 					continueShopping();
 				}
@@ -98,9 +98,9 @@ function purchaseProduct(){
 						],
 						function(error){
 							if (error) throw err;
-							console.log("\n\n* * * THANK YOU * * *"+
+							console.log("\n\n"+chalk.bold("* * * THANK YOU * * *")+
 										"\nYour total cost is $" + productCost +
-										"\nYou have successfully purchased "+ answer.userQuantity + " unit(s) of "+ res[0].product_name+"\n\n");
+										"\nYou have successfully "+chalk.bold("PURCHASED ")+ answer.userQuantity + " unit(s) of "+ res[0].product_name+"\n\n");
 							continueShopping();
 						});
 				}
@@ -130,6 +130,6 @@ function continueShopping() {
 }
 
 function runQuit(){
-	console.log("\n* * * EXITING CUSTOMER VIEW * * *\n")
+	console.log("\n\n"+chalk.bold("* * * EXITING CUSTOMER VIEW * * *")+"\n")
 	process.exit();
 };
