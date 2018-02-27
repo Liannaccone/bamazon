@@ -50,7 +50,7 @@ The application has three interfaces:
 
 ### Bamazon Manager
 
-<img src="/assets/images/bamazonManager_demno.gif"> 
+<img src="/assets/images/bamazonManager_demo.gif"> 
 
 ## Technology Used
 - Javascript
